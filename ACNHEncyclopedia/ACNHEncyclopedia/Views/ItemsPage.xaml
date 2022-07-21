@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:localTranslate="clr-namespace:ACNHEncyclopedia.Controls"
+             mc:Ignorable="d"
+             x:Class="ACNHEncyclopedia.Views.ItemsPage"
+             xmlns:ioc="clr-namespace:Prism.Ioc;assembly=Prism.Forms"
+             Title="{Binding Title}"
+             x:Name="BrowseItemsPage">
+
+    
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" />
+    </ContentPage.ToolbarItems>-->
+
+    <StackLayout>
+        <Picker Title="Select kind" SelectedItem="{Binding KindSelelected}" ItemsSource="{Binding Kinds}" HorizontalOptions="FillAndExpand" ItemDisplayBinding="{Binding Name}">   
+        </Picker>
+        <ListView ItemsSource="{Binding ItemsDisplayed}" VerticalOptions="Start" HasUnevenRows="true">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Image}"></Image>
+                            <StackLayout Grid.Column="1">
+                                <Label Text="{Binding Name, StringFormat='Name: {0}'}" VerticalTextAlignment="Center"></Label>
+                                <Label Text="{Binding ImageName, StringFormat='ImageName: {0}'}" VerticalTextAlignment="Center"></Label>
+                                <Label Text="{Binding Kind.Name, StringFormat='Kind: {0}'}" VerticalTextAlignment="Center"></Label>
+                                <Label Text="{Binding KindExtended, StringFormat='Kindtxt: {0}'}" VerticalTextAlignment="Center"></Label>
+                                <Label Text="{Binding TranslateId, Converter={StaticResource TranslateConverter}}"></Label>
+                            </StackLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid HeightRequest="80">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Text="Page précédente" Command="{Binding PreviousPageCommad}"></Button>
+            <Label Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Page "/>
+                        <Span Text="{Binding ActualPage}" FontAttributes="Bold"/>
+                        <Span Text="/" />
+                        <Span Text="{Binding MaxPage}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Button Text="Page suivante" Grid.Column="2" Command="{Binding NextPageCommand}"></Button>
+        </Grid>
+    </StackLayout>
+    
+</ContentPage>

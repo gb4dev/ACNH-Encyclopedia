@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dryloc:PrismApplication xmlns:dryloc="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ACNHEncyclopedia.App"
+             xmlns:localControls="clr-namespace:ACNHEncyclopedia.Controls"
+             xmlns:ioc="clr-namespace:Prism.Ioc;assembly=Prism.Forms"
+                         xmlns:local="clr-namespace:ACNHEncyclopedia.Models">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+                 <OnPlatform x:TypeArguments="x:String" x:Key="font">
+                    <On Platform="Android" Value="Cabin-Regular.ttf#Cabin" />
+                </OnPlatform>
+
+            <OnPlatform x:TypeArguments="x:String" x:Key="fontBold">
+                <On Platform="Android" Value="Cabin-SemiBold.ttf#Cabin SemiBold" />
+            </OnPlatform>
+
+
+            <ioc:ContainerProvider x:TypeArguments="localControls:TranslateItemConverter"
+                                   x:Key="TranslateConverter" />
+
+            <ioc:ContainerProvider x:TypeArguments="localControls:TranslateAppConverter"
+                                   x:Key="TranslateAppConverter" />
+
+            <ioc:ContainerProvider x:TypeArguments="localControls:ItemIsInPossesionListConverter"
+                                   x:Key="ItemIsInPossesionListConverter" />
+            
+             <local:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+
+
+            <Style x:Key="btnTransparent" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+                <Setter Property="BorderColor" Value="Transparent"></Setter>
+            </Style>
+
+            <Color x:Key="GreenBackgroundPage">#04c304</Color>
+            <Color x:Key="GreenBackgroundFrame">#2ee12e</Color>
+            <Color x:Key="GreenOver">#7bfe7a</Color>
+            <Color x:Key="MarronBackground">#7f3301</Color>
+            <Color x:Key="MarronOver">#9f4f1a</Color>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="BackgroundColor" Value="{StaticResource GreenBackgroundPage}"></Setter>
+                <Setter Property="BarBackgroundColor" Value="{StaticResource MarronBackground}" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>
+
+            <Style TargetType="Frame" x:Key="FrameStyle">
+                <Setter Property="BackgroundColor" Value="{StaticResource GreenBackgroundFrame}"></Setter>
+                <Setter Property="CornerRadius" Value="10"></Setter>
+            </Style>
+
+            <Style TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource GreenBackgroundFrame}"></Setter>
+            </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="FontFamily" Value="{StaticResource Key='font'}"></Setter>
+            </Style>
+
+            <Style TargetType="Label" x:Key="labelBold">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="FontFamily" Value="{StaticResource Key='fontBold'}"></Setter>
+            </Style>
+
+            <Style TargetType="ContentPage" x:Key="MenuPageStyle">
+                <Setter Property="BackgroundColor" Value="{StaticResource MarronBackground}"></Setter>
+            </Style>
+
+            <Style TargetType="Entry" >
+                <Setter Property="PlaceholderColor" Value="{StaticResource MarronBackground}"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource MarronBackground}"></Setter>
+                <Setter Property="FontFamily" Value="{StaticResource Key='font'}"></Setter>
+            </Style>
+
+            
+        </ResourceDictionary>
+    </Application.Resources>
+    
+</dryloc:PrismApplication>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ACNHEncyclopedia.Views.SettingsPage"
+             Title="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='Pages_Title_SettingsPage'}">
+    <ContentPage.Content>
+        <StackLayout >
+            <FlexLayout JustifyContent="SpaceAround">
+                <Label Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='SettingsPage_ChangeLanguage', StringFormat='{0} :'}" VerticalTextAlignment="Center"></Label>
+                <Picker Title="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='SettingsPage_SelectLanguage'}" ItemsSource="{Binding Langs}" SelectedItem="{Binding SelectedLang}" ItemDisplayBinding="{Binding Key}" ></Picker>
+            </FlexLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

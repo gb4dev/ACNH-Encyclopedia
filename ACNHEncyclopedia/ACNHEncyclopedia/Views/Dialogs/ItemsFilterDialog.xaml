@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ACNHEncyclopedia.Views.Dialogs.ItemsFilterDialog"
+                    xmlns:prism="http://prismlibrary.com"
+       xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+       prism:DialogLayout.RelativeWidthRequest="0.75"
+        Style="{StaticResource Key='FrameStyle'}">
+
+    
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+        <Label HorizontalOptions="StartAndExpand" Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='Filter_SortedBy', StringFormat='{0} :'}" FontSize="Subtitle"></Label>
+            <iconize:IconButton 
+                HorizontalOptions="End" FontSize="30" Margin="0,-15,-35,0" Padding="0" Style="{StaticResource Key='btnTransparent'}" TextColor="Red" Text="mdi-window-close" Command="{Binding CancelCommand}"></iconize:IconButton>
+        </StackLayout>
+
+
+        <Picker ItemsSource="{Binding AvailableSorts}" SelectedItem="{Binding SelectedSort}" ItemDisplayBinding="{Binding Value}" Title="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='Filter_SelectField'}"></Picker>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='Filter_Croissant'}" VerticalTextAlignment="Center"></Label>
+            <Switch IsToggled="{Binding OrderSort}" ThumbColor="Transparent"></Switch>
+            <Label Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='Filter_Decroissant'}" VerticalTextAlignment="Center"></Label>
+        </StackLayout>
+
+        <iconize:IconButton HorizontalOptions="End" FontSize="Title" Margin="0" Padding="0" BackgroundColor="{StaticResource Key='GreenOver'}" Style="{StaticResource Key='btnTransparent'}" TextColor="{StaticResource Key='GreenBackgroundPage'}" Text="mdi-check" Command="{Binding FilterCommand}"></iconize:IconButton>
+    </StackLayout>
+
+</Frame>

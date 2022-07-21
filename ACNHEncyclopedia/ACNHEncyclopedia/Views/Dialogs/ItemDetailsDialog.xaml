@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ACNHEncyclopedia.Views.Dialogs.ItemDetailsDialog"
+             xmlns:prism="http://prismlibrary.com"
+            prism:DialogLayout.RelativeWidthRequest="0.75"
+       prism:DialogLayout.CloseOnBackgroundTapped="true"
+       xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+       xmlns:local="clr-namespace:ACNHEncyclopedia.Models"
+       Style="{StaticResource Key='FrameStyle'}"
+       Margin="0" Padding="5">
+
+    <Frame.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="VerticalOptions" Value="Center"></Setter>
+                <Setter Property="VerticalTextAlignment" Value="Center"></Setter>
+            </Style>
+
+            <Style TargetType="Frame" x:Key="borderMarron">
+                <Setter Property="BorderColor" Value="{StaticResource Key='MarronBackground'}"></Setter>
+                <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+            </Style>
+
+            <local:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+        </ResourceDictionary>
+    </Frame.Resources>
+
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.ColumnSpan="3" VerticalTextAlignment="Center" Text="{Binding Item.TranslateId, Converter={StaticResource TranslateConverter}}" FontSize="Title"></Label>
+        <Frame  Grid.Row="1"  Grid.ColumnSpan="3" BackgroundColor="White" CornerRadius="10">
+            <Image Source="{Binding Item.Image}" Aspect="AspectFit"></Image>
+            
+        </Frame>
+        
+        <StackLayout  Grid.Row="2">
+            <Label HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='ItemDetailsDialog_BuyPrice', StringFormat='{0} :'}"></Label>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Label Text="{Binding Item.Price}"></Label>
+                <Image Source="Bell.png" WidthRequest="25"></Image>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout  Grid.Row="2"  Grid.Column="2">
+            <Label HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='ItemDetailsDialog_SellPrice', StringFormat='{0} :'}"></Label>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Label Text="{Binding Item.SellPrice}"></Label>
+                <Image Source="Bell.png" WidthRequest="25"></Image>
+            </StackLayout>
+        </StackLayout>
+
+        <Frame Grid.Row="3" Grid.ColumnSpan="3" VerticalOptions="Start" IsVisible="{Binding HasCraft}" Style="{StaticResource Key='borderMarron'}" Margin="0" Padding="0">
+        <StackLayout >
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Image Source="diy.png" HeightRequest="30" VerticalOptions="Center"></Image>
+                    <Label Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='ItemDetailsDialog_Craft', StringFormat='{0} :'}" FontSize="Title"></Label>
+                </StackLayout>
+
+
+            <ListView x:Name ="ltvName" ItemsSource="{Binding Craft.ItemsForCraft}" HasUnevenRows="false" RowHeight="50" HeightRequest="{Binding CraftListHeight}" SeparatorColor="{StaticResource Key='MarronBackground'}">
+                <ListView.Behaviors>
+                    <prism:EventToCommandBehavior EventName="ItemTapped" EventArgsConverterParameter="{x:Reference ltvName}"
+                                              Command="{Binding OpenRessourceDetailsCommand}" EventArgsConverter="{StaticResource SelectedItemConverter}"/>
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+                                <!--<Frame Style="{StaticResource Key='borderMarron'}" Margin="0" Padding="0">-->
+                                    
+                            <FlexLayout JustifyContent="SpaceBetween" Margin="0" Padding="0" >
+                                <Image Source="{Binding Item.Image}" Aspect="AspectFit" VerticalOptions="Center"  Margin="5,0,0,0"></Image>
+                                <Label Text="{Binding Item.TranslateId, Converter={StaticResource TranslateConverter}}" VerticalTextAlignment="Center"></Label>
+                                <Label Text="{Binding Count, StringFormat='x{0}'}" VerticalTextAlignment="Center" Padding="0,0,5,0"></Label>
+                            </FlexLayout>
+                                <!--</Frame>-->
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+        </StackLayout>
+        </Frame>
+
+        <FlexLayout Grid.Row="4" Grid.ColumnSpan="3" JustifyContent="SpaceAround" Margin="0" Padding="0">
+            <iconize:IconButton FontSize="Title" Style="{StaticResource Key='btnTransparent'}" Text="mdi-heart" Command="{Binding AddToWishListCommand}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                     Binding="{Binding IsInWishList}"
+                     Value="True">
+                        <Setter Property="TextColor"  Value="Red" />
+                        <!-- multiple Setters elements are allowed -->
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button"
+                     Binding="{Binding IsInWishList}"
+                     Value="False">
+                        <Setter Property="TextColor"  Value="White" />
+                        <!-- multiple Setters elements are allowed -->
+                    </DataTrigger>
+                </Button.Triggers>
+            </iconize:IconButton>
+            <iconize:IconButton FontSize="Title" Style="{StaticResource Key='btnTransparent'}" Text="mdi-playlist-check" Command="{Binding AddToPossesionCommand}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                     Binding="{Binding IsInPossesionList}"
+                     Value="True">
+                        <Setter Property="TextColor"  Value="Green" />
+                        <!-- multiple Setters elements are allowed -->
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button"
+                     Binding="{Binding IsInPossesionList}"
+                     Value="False">
+                        <Setter Property="TextColor"  Value="White" />
+                        <!-- multiple Setters elements are allowed -->
+                    </DataTrigger>
+                </Button.Triggers>
+            </iconize:IconButton>
+        </FlexLayout>
+
+    </Grid>
+</Frame>

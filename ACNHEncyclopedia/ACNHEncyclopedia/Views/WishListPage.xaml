@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+             mc:Ignorable="d"
+             x:Class="ACNHEncyclopedia.Views.WishListPage"
+             Title="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='Pages_Title_WishListPage'}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='WishListPage_NoItemsInWishlist'}" VerticalOptions="Center" HorizontalOptions="Center">
+                <!--<Label.Triggers>
+                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding HaveItems}"
+                                            Value="False">
+                        <Setter Property="IsVisible"  Value="True" />
+                    </DataTrigger>
+                </Label.Triggers>-->
+            </Label>
+
+            <flv:FlowListView FlowColumnCount="3" SeparatorVisibility="Default" HasUnevenRows="true" RowHeight="200"  FlowItemsSource="{Binding ItemsDisplayed}"
+                              FlowItemTappedCommand="{Binding ItemTappedCommand}" VerticalOptions="StartAndExpand">
+
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <Frame HasShadow="True" CornerRadius="10" Padding="8" Margin="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame"
+                                             Binding="{Binding Id, Converter={StaticResource ItemIsInPossesionListConverter}}"
+                                            Value="True">
+                                    <Setter Property="BackgroundColor"  Value="{StaticResource Key='GreenOver'}" />
+                                    <!-- multiple Setters elements are allowed -->
+                                </DataTrigger>
+                            </Frame.Triggers>
+
+                            <Grid  VerticalOptions="StartAndExpand" ColumnSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="80"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout>
+                                    <Image Source="{Binding Image}" Aspect="AspectFit" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Image>
+                                </StackLayout>
+                                <Label Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding TranslateId, Converter={StaticResource TranslateConverter}}"/>
+
+                            </Grid>
+                        </Frame>
+
+
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+
+            </flv:FlowListView>
+
+            <Grid VerticalOptions="StartAndExpand" Padding="0,-10,0,0">
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid"
+                                             Binding="{Binding HaveItems}"
+                                            Value="False">
+                        <Setter Property="IsVisible"  Value="False" />
+                        <!-- multiple Setters elements are allowed -->
+                    </DataTrigger>
+                </Grid.Triggers>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <iconize:IconButton FontSize="50" WidthRequest="200" ScaleX="3"  Margin="0" Padding="0" Style="{StaticResource Key='btnTransparent'}" TextColor="{StaticResource Key='MarronBackground'}" Text="mdi-arrow-left-bold" Command="{Binding PreviousPageCommad}">
+                    <!--<Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                     Binding="{Binding CanPreviousPage}"
+                     Value="False">
+                            <Setter Property="IsVisible"  Value="False" />
+                            --><!-- multiple Setters elements are allowed --><!--
+                        </DataTrigger>
+                    </Button.Triggers>-->
+                </iconize:IconButton>
+                <Label Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='Common_Page'}"/>
+                            <Span Text=" " />
+                            <Span Text="{Binding ActualPage}" Style="{StaticResource Key='labelBold'}"/>
+                            <Span Text="/" />
+                            <Span Text="{Binding MaxPage}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <iconize:IconButton Grid.Column="2" FontSize="50" WidthRequest="200" ScaleX="3"  Margin="0" Padding="0" Style="{StaticResource Key='btnTransparent'}" TextColor="{StaticResource Key='MarronBackground'}" Text="mdi-arrow-right-bold" Command="{Binding NextPageCommand}">
+                    <!--<Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                     Binding="{Binding CanNextPage}"
+                     Value="False">
+                            <Setter Property="IsVisible"  Value="False" />
+                        </DataTrigger>
+                    </Button.Triggers>-->
+                </iconize:IconButton>
+            </Grid>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

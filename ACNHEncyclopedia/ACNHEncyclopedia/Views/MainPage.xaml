@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            xmlns:views="clr-namespace:ACNHEncyclopedia.Views"
+                  xmlns:local="clr-namespace:ACNHEncyclopedia.Models"
+                  xmlns:beh="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+                  xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+                  x:Class="ACNHEncyclopedia.Views.MainPage">
+
+    <MasterDetailPage.Resources>
+        <ResourceDictionary>
+            <local:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+
+            <Style TargetType="FlexLayout" x:Key="MenuListStyle">
+                <!--<Setter Property="BackgroundColor" Value="{StaticResource Key='MarronOver'}"></Setter>-->
+                <!--<Setter Property="Margin" Value="5"></Setter>-->
+            </Style>
+        </ResourceDictionary>
+    </MasterDetailPage.Resources>
+
+        <MasterDetailPage.Master>
+        <ContentPage Style="{StaticResource Key='MenuPageStyle'}" Title="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='MasterDetail_Menu_Title'}">
+            <StackLayout>
+                <FlexLayout BackgroundColor="{StaticResource Key='GreenBackgroundPage'}" JustifyContent="Center">
+                    <Label Margin="0,0,5,0" Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='MasterDetail_Menu_Title'}" VerticalTextAlignment="Center" FontAttributes="Bold"></Label>
+                    <Image Source="logo.png" HeightRequest="50"></Image>
+                </FlexLayout>
+                <ListView ItemsSource="{Binding Menus}" >
+                    <ListView.Behaviors>
+                        <beh:EventToCommandBehavior EventName="ItemTapped" 
+                                          Command="{Binding OnNavigateCommand}" EventArgsConverter="{StaticResource SelectedItemConverter}"/>
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                
+                                <Frame BorderColor="{StaticResource Key='MarronOver'}" BackgroundColor="Transparent" Margin="0" Padding="0">
+                                    <FlexLayout Style="{StaticResource MenuListStyle}" VerticalOptions="Center" Margin="20,0,0,0">
+                                        
+                                            
+                                            <Image VerticalOptions="Center" Source="{Binding ImageName}" Scale="0.7"></Image>
+
+                                        <Label Text="{Binding Title , Converter={StaticResource TranslateAppConverter}}" FontSize="Title" VerticalTextAlignment="Center" VerticalOptions="Center" Padding="10,0,0,0"></Label>
+                                    </FlexLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Master>
+
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <ContentPage Title="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='Pages_Title_HomePage'}">
+                    <StackLayout>
+                        <Label  Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='MainPage_WelcomeMessage'}"></Label>
+                        <Label Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='MainPage_TutoTitle'}" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                        <StackLayout Orientation="Horizontal">
+                            <iconize:IconLabel Text="mdi-heart"></iconize:IconLabel>
+                            <Label Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='MainPage_TutoWishList'}"></Label>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <iconize:IconLabel Text="mdi-playlist-check"></iconize:IconLabel>
+                            <Label Text="{Binding . , Converter={StaticResource TranslateAppConverter}, ConverterParameter='MainPage_TutoPossesionList'}"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </ContentPage>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+
+</MasterDetailPage>
